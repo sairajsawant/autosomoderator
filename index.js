@@ -45,20 +45,24 @@ const puppeteer = require('puppeteer');
         //     })
         await page.goto('https://stackoverflow.com/questions/tagged/dialogflow')
         await page.waitForSelector('.user-action-time > span');
-        const delimDateStr = await page.evaluate(() => {
-            return (document.querySelector('.user-action-time > span').title); 
-        })
         let linkarray = await page.evaluate(() => {
-            let elements = Array.from(document.querySelectorAll('.t-dialogflow-fulfillment'));
+            let elements = Array.from(document.querySelectorAll('.t-dialogflow'));
             let links = elements.map(element => {
                 return element.parentNode.children[0].children[0].href
             })
             return links;
         });
-        let currDateTime = new Date();
-        let delimDateTime = new Date(delimDateStr);
+        let datearray = await page.evaluate(() => {
+            let elements = Array.from(document.querySelectorAll('.user-action-time > span'));
+            let dates = elements.map(element => {
+                return (element.title)
+            })
+            return dates;
+        });
+        let delimDateTime = new Date("2019-04-28 04:40:05Z");  // get this from file
 
-        for (let index = 0; index < linkarray.length; index++) {
+        for (let index = 0; index < linkarray.length && ((new Date(datearray[index])) > delimDateTime); index++) {
+            console.log(datearray[index]);
             await page.goto(linkarray[index]);
             await page.waitForSelector('.post-menu > a:nth-child(3)');
             let editlink = await page.evaluate(() => {
