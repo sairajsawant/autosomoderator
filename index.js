@@ -30,6 +30,7 @@ const puppeteer = require('puppeteer');
         await page.waitForNavigation()
       
         //  // Save Session Cookies
+        // TODO: save and load cookies
         // const cookiesObject = await page.cookies()
         // const jsonfile = require('jsonfile')
         // // Write cookies to temp file to be used in other profile pages
@@ -44,15 +45,33 @@ const puppeteer = require('puppeteer');
         //     })
         await page.goto('https://stackoverflow.com/questions/tagged/dialogflow')
         let linkarray = await page.evaluate(() => {
-            let elements = Array.from(document.querySelectorAll('.t-dialogflow-fulfillment'));
-            let links = elements.map(element => {
+            let elements = Array.from(document.querySelectorAll('.t-twilio'));
+              let links = elements.map(element => {
                 return element.parentNode.children[0].children[0].href
             })
             return links;
         } );
-        for (let index = 0; index < linkarray.length; index++) {
+        for (let index = 0; index < linkarray.length; index++) { 
             await page.goto(linkarray[index]);
-            await page.waitForNavigation();
+            await page.waitForSelector('.post-menu > a:nth-child(3)');
+            let editlink = await page.evaluate(() => {
+                return document.querySelector('.post-menu > a:nth-child(3)').href ;
+            })
+            await page.goto(editlink);
+            await page.waitForSelector('.s-tag');
+            await page.evaluate(() => {
+                let elements = Array.from(document.querySelectorAll('.s-tag'));
+                console.log(elements);
+                for(var i = 0; i< elements.length; i++){
+ 
+                     if(elements[i].innerText === 'dialogflow'|| elements[i].innerText === 'twilio'){
+                        elements[i].getElementsByClassName('js-delete-tag')[0].click();
+                    }
+                }
+                document.querySelector('#edit-comment').value = "did awsom stuff";
+            } );
+            // await page.waitForNavigation();
+            
         } 
     }
 })()
