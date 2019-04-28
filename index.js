@@ -45,7 +45,7 @@ const puppeteer = require('puppeteer');
         //     })
         await page.goto('https://stackoverflow.com/questions/tagged/dialogflow')
         let linkarray = await page.evaluate(() => {
-            let elements = Array.from(document.querySelectorAll('.t-twilio'));
+            let elements = Array.from(document.querySelectorAll('.t-dialogflow'));
             let links = elements.map(element => {
                 return element.parentNode.children[0].children[0].href
             })
@@ -65,6 +65,7 @@ const puppeteer = require('puppeteer');
                     let elements = Array.from(document.querySelectorAll('.s-tag'));
                     console.log(elements);
                     let addActionsOnGoogle = true;
+                    let anyEditsMade = false;
                     for (var i = 0; i < elements.length; i++) {
 
                         if (elements[i].innerText === 'actions-on-google') {
@@ -72,16 +73,21 @@ const puppeteer = require('puppeteer');
                         }
                         if (elements[i].innerText === 'dialogflow-fulfillment' || elements[i].innerText === 'twilio' || elements[i].innerText === 'api-ai') {
                             elements[i].getElementsByClassName('js-delete-tag')[0].click();
+                            anyEditsMade = true;
                         }
                     }
                     if (addActionsOnGoogle) {
                         document.querySelector('#tageditor-replacing-tagnames--input').value = 'actions-on-google';
+                        anyEditsMade = true;
                     }
-                    document.querySelector('#edit-comment').value = "removed unneccesary tags";
-                    //      document.querySelector('#submit-button').click();
-                });
-                // await page.waitForNavigation();
+                    
+                    if (anyEditsMade) {
+                        //TODO: randomize comments here
+                        document.querySelector('#edit-comment').value = "removed unneccesary tags";
+                        //document.querySelector('#submit-button').click();
+                    }
 
+                });
             }
         }
     }
