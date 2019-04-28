@@ -59,7 +59,11 @@ const puppeteer = require('puppeteer');
             })
             return dates;
         });
-        let delimDateTime = new Date("2019-04-28 04:40:05Z");  // get this from file
+        let delimDateTime = new Date(fs.readFileSync('./lastAccessTime'));
+
+        //update lastAccessTime
+        let lastAccess = datearray[0];
+        fs.writeFileSync('./lastAccessTime',lastAccess);
 
         for (let index = 0; index < linkarray.length && ((new Date(datearray[index])) > delimDateTime); index++) {
             console.log(datearray[index]);
