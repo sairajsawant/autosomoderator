@@ -1,4 +1,6 @@
+const cookiesFilePath = 'utils/loginCookie.json';  
 const puppeteer = require('puppeteer');
+const fs = require("fs");
 
 (async () => {
     const browser = await puppeteer.launch({
@@ -6,20 +8,19 @@ const puppeteer = require('puppeteer');
     })
     const page = await browser.newPage()
 
-    const cookiesFilePath = './loginCookiez.json';
     const fs = require("fs");
 
     if (fs.existsSync(cookiesFilePath)) {
         // If file exist load the cookies
-        const cookiesArr = require(`.${cookiesFilePath}`)
+        let content = fs.readFileSync(cookiesFilePath);
+        const cookiesArr = JSON.parse(content);
         if (cookiesArr.length !== 0) {
-            for (let cookie of cookiesArr) {
-                console.log(cookie);
-
-                await page.setCookie(cookie)
+            for (let a = 0; a < cookiesArr.length;a++) {
+                console.log(cookiesArr[a]);
+                await page.setCookie(cookiesArr[a]);
             }
             console.log('Session has been loaded in the browser')
-            await page.goto('https://stackoverflow.com/users/login?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2fnocaptcha')
+            await page.goto('https://stackoverflow.com/')
             return true
         }
     } else {
@@ -59,11 +60,11 @@ const puppeteer = require('puppeteer');
             })
             return dates;
         });
-        let delimDateTime = new Date(fs.readFileSync('./lastAccessTime'));
+        let delimDateTime = new Date(fs.readFileSync('utils/lastAccessTime'));
 
         //update lastAccessTime
         let lastAccess = datearray[0];
-        fs.writeFileSync('./lastAccessTime',lastAccess);
+        fs.writeFileSync('utils/lastAccessTime',lastAccess);
 
         for (let index = 0; index < linkarray.length && ((new Date(datearray[index])) > delimDateTime); index++) {
             console.log(datearray[index]);
