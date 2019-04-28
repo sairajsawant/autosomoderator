@@ -1,0 +1,11 @@
+{
+  "name": "autoso",
+  "version": "1.0.0",
+  "description": "Auto SO Moderator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sairaj Sawant",
+  "license": "ISC"
+}
