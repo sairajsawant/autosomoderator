@@ -1,0 +1,62 @@
+{
+   "8/RrMmQlCD2Gsp14wUCE1P8r7B2C5+yE0+g79IPyRsc=": {
+      "expiry": 1588027305.005693,
+      "mode": "force-https",
+      "sts_include_subdomains": false,
+      "sts_observed": 1556491305.005694
+   },
+   "RKGUifdMjZaPQ77uzE285XWQ7MuLuGGzrqROmlR25DA=": {
+      "expiry": 1572043091.218645,
+      "mode": "force-https",
+      "sts_include_subdomains": false,
+      "sts_observed": 1556491091.218646
+   },
+   "SGnsN9xjdAhRqkEBrczqkg1vZrz13wci5bVySdDUXA0=": {
+      "expiry": 1572043090.468405,
+      "mode": "force-https",
+      "sts_include_subdomains": false,
+      "sts_observed": 1556491090.468408
+   },
+   "W5S/dGQfCwHrBGIcCGyIuTO9TIJhhO8vqio7ISy+epU=": {
+      "expiry": 1572043090.46875,
+      "mode": "force-https",
+      "sts_include_subdomains": false,
+      "sts_observed": 1556491090.468751
+   },
+   "WzJjdrym6AfEzSYr8V3R1slFzsSEVckfk5o4bv9u6Zo=": {
+      "expect_ct": {
+         "expect_ct_enforce": false,
+         "expect_ct_expiry": 1557095846.917948,
+         "expect_ct_observed": 1556491046.917948,
+         "expect_ct_report_uri": "https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      },
+      "expiry": 0.0,
+      "mode": "default",
+      "sts_include_subdomains": false,
+      "sts_observed": 0.0
+   },
+   "Xc7cAsRjFQUXG8/xQb0o1ow0EUOMwBW74DhuET/ajqs=": {
+      "expiry": 1572043305.063718,
+      "mode": "force-https",
+      "sts_include_subdomains": false,
+      "sts_observed": 1556491305.06372
+   },
+   "fJjUrPqhktMfiTHJX3Q0pJi/P12Q72DBgzzJqjlNC4o=": {
+      "expiry": 1567377447.102816,
+      "mode": "force-https",
+      "sts_include_subdomains": true,
+      "sts_observed": 1556491047.102818
+   },
+   "iStHM97w9V0BdzMBTVyRmmZ8t5OCPZEYpnHnAhpOA+E=": {
+      "expiry": 1572043091.216625,
+      "mode": "force-https",
+      "sts_include_subdomains": false,
+      "sts_observed": 1556491091.216626
+   },
+   "sNjZ0sTEDbn0NBlCCn67CsuN2mMn60+Jw+mKPYyrh3M=": {
+      "expiry": 1572043091.215603,
+      "mode": "force-https",
+      "sts_include_subdomains": false,
+      "sts_observed": 1556491091.215605
+   }
+}

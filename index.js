@@ -1,49 +1,18 @@
-const cookiesFilePath = 'utils/loginCookie.json';  
 const puppeteer = require('puppeteer');
-const fs = require("fs");
 
 (async () => {
     const browser = await puppeteer.launch({
-        headless: false
+        headless: false,
+        userDataDir: 'userData'
     })
     const page = await browser.newPage()
-
     const fs = require("fs");
+        // await page.goto('https://stackoverflow.com/users/login?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2fnocaptcha')
+        // await page.type('#email', 'pict.assistant@gmail.com')
+        // await page.type('#password', 'pict.assistant##')
+        // await page.click('#submit-button')
+        // await page.waitForNavigation()
 
-    if (fs.existsSync(cookiesFilePath)) {
-        // If file exist load the cookies
-        let content = fs.readFileSync(cookiesFilePath);
-        const cookiesArr = JSON.parse(content);
-        if (cookiesArr.length !== 0) {
-            for (let a = 0; a < cookiesArr.length;a++) {
-                console.log(cookiesArr[a]);
-                await page.setCookie(cookiesArr[a]);
-            }
-            console.log('Session has been loaded in the browser')
-            await page.goto('https://stackoverflow.com/')
-            return true
-        }
-    } else {
-        await page.goto('https://stackoverflow.com/users/login?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2fnocaptcha')
-        await page.type('#email', 'pict.assistant@gmail.com')
-        await page.type('#password', 'pict.assistant##')
-        await page.click('#submit-button')
-        await page.waitForNavigation()
-
-        //  // Save Session Cookies
-        // TODO: save and load cookies
-        // const cookiesObject = await page.cookies()
-        // const jsonfile = require('jsonfile')
-        // // Write cookies to temp file to be used in other profile pages
-        // jsonfile.writeFile(cookiesFilePath, cookiesObject, {
-        //         spaces: 2
-        //     },
-        //     function (err) {
-        //         if (err) {
-        //             console.log('The file could not be written.', err)
-        //         }
-        //         console.log('Session has been successfully saved')
-        //     })
         await page.goto('https://stackoverflow.com/questions/tagged/dialogflow')
         await page.waitForSelector('.user-action-time > span');
         let linkarray = await page.evaluate(() => {
@@ -60,11 +29,12 @@ const fs = require("fs");
             })
             return dates;
         });
-        let delimDateTime = new Date(fs.readFileSync('utils/lastAccessTime'));
+        const lastAccessTimeFile = 'utils/lastAccessTime';
+        let delimDateTime = new Date(fs.readFileSync(lastAccessTimeFile));
 
         //update lastAccessTime
         let lastAccess = datearray[0];
-        fs.writeFileSync('utils/lastAccessTime',lastAccess);
+        fs.writeFileSync(lastAccessTimeFile,lastAccess);
 
         for (let index = 0; index < linkarray.length && ((new Date(datearray[index])) > delimDateTime); index++) {
             console.log(datearray[index]);
@@ -107,4 +77,4 @@ const fs = require("fs");
             }
         }
     }
-})()
+)()
