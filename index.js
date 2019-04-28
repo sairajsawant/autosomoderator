@@ -44,13 +44,20 @@ const puppeteer = require('puppeteer');
         //         console.log('Session has been successfully saved')
         //     })
         await page.goto('https://stackoverflow.com/questions/tagged/dialogflow')
+        await page.waitForSelector('.user-action-time > span');
+        const delimDateStr = await page.evaluate(() => {
+            return (document.querySelector('.user-action-time > span').title); 
+        })
         let linkarray = await page.evaluate(() => {
-            let elements = Array.from(document.querySelectorAll('.t-dialogflow'));
+            let elements = Array.from(document.querySelectorAll('.t-dialogflow-fulfillment'));
             let links = elements.map(element => {
                 return element.parentNode.children[0].children[0].href
             })
             return links;
         });
+        let currDateTime = new Date();
+        let delimDateTime = new Date(delimDateStr);
+
         for (let index = 0; index < linkarray.length; index++) {
             await page.goto(linkarray[index]);
             await page.waitForSelector('.post-menu > a:nth-child(3)');
