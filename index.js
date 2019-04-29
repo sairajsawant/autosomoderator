@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-
+let x = false;
 (async () => {
     const browser = await puppeteer.launch({
         headless: false,
@@ -57,7 +57,7 @@ const puppeteer = require('puppeteer');
                         if (elements[i].innerText === 'actions-on-google') {
                             addActionsOnGoogle = false;
                         }
-                        if (elements[i].innerText === 'dialogflow-fulfillment' || elements[i].innerText === 'twilio' || elements[i].innerText === 'api-ai') {
+                        if (elements[i].innerText === 'google-assistant-sdk'||elements[i].innerText === 'dialogflow-fulfillment' || elements[i].innerText === 'chatbot' || elements[i].innerText === 'api-ai') {
                             elements[i].getElementsByClassName('js-delete-tag')[0].click();
                             anyEditsMade = true;
                         }
@@ -70,11 +70,17 @@ const puppeteer = require('puppeteer');
                     if (anyEditsMade) {
                         //TODO: randomize comments here
                         document.querySelector('#edit-comment').value = "removed unneccesary tags";
-                        //document.querySelector('#submit-button').click();
-                    }
+                        document.querySelector('.post-form').submit();
+                        x = true;
 
+                    }
+                
                 });
+                if(x){
+                    await page.waitForSelector('.post-text > blockquote:nth-child(1)'); 
+                }
+                
             }
         }
-    }
+     }
 )()
