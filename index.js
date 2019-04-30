@@ -66,7 +66,7 @@ async function doProcess(page) {
                         if (elements[i].innerText === 'actions-on-google') {
                             addActionsOnGoogle = false;
                         }
-                        if (elements[i].innerText === 'google-assistant-sdk'||elements[i].innerText === 'dialogflow-fulfillment' || elements[i].innerText === 'chatbot' || elements[i].innerText === 'api-ai') {
+                        if (elements[i].innerText === 'dialogflow-fulfillment' || elements[i].innerText === 'chatbot' || elements[i].innerText === 'api-ai') {
                             elements[i].getElementsByClassName('js-delete-tag')[0].click();
                             anyEditsMade = true;
                         }
