@@ -6,7 +6,16 @@ let x = false;
         userDataDir: 'userData'
     })
     const page = await browser.newPage()
-    const fs = require("fs");
+    doProcess(page);
+    
+
+}
+     
+)()
+
+async function doProcess(page) {
+
+  const fs = require("fs");
         // await page.goto('https://stackoverflow.com/users/login?ssrc=head&returnurl=https%3a%2f%2fstackoverflow.com%2fnocaptcha')
         // await page.type('#email', 'pict.assistant@gmail.com')
         // await page.type('#password', 'pict.assistant##')
@@ -47,11 +56,11 @@ let x = false;
                 //no pending edit 
                 await page.goto(editlink);
                 await page.waitForSelector('.s-tag');
+                let addActionsOnGoogle = true;
+                let anyEditsMade = false;
                 await page.evaluate(() => {
                     let elements = Array.from(document.querySelectorAll('.s-tag'));
                     console.log(elements);
-                    let addActionsOnGoogle = true;
-                    let anyEditsMade = false;
                     for (var i = 0; i < elements.length; i++) {
 
                         if (elements[i].innerText === 'actions-on-google') {
@@ -62,25 +71,32 @@ let x = false;
                             anyEditsMade = true;
                         }
                     }
-                    if (addActionsOnGoogle) {
-                        document.querySelector('#tageditor-replacing-tagnames--input').value = 'actions-on-google';
-                        anyEditsMade = true;
-                    }
                     
-                    if (anyEditsMade) {
-                        //TODO: randomize comments here
-                        document.querySelector('#edit-comment').value = "removed unneccesary tags";
-                        document.querySelector('.post-form').submit();
-                        x = true;
-
-                    }
-                
                 });
-                if(x){
-                    await page.waitForSelector('.post-text > blockquote:nth-child(1)'); 
+             /*   if (addActionsOnGoogle) {
+                    // document.querySelector('#tageditor-replacing-tagnames--input').value = 'actions-on-google';
+                    // anyEditsMade = true;
+                    await page.type('#tageditor-replacing-tagnames--input', 'actions-on-google');
+                    await page.waitForSelector('.match');
+                    await page.click('.match');
+                    anyEditsMade = true;
+                                
                 }
+            */
                 
+                if (anyEditsMade) {
+                    //TODO: randomize comments here
+                    await page.type('#edit-comment', 'removed unneccesary tags');
+                    await page.click('#submit-button');
+                    try{
+                        await page.waitForSelector('.post-text > blockquote:nth-child(1)',{ timeout: 5000 });
+                    }catch(err){
+                        console.log("Not edited");
+                    }
+                }
             }
         }
-     }
-)()
+        await page.waitFor(50000);
+        console.log('will run again');
+        doProcess(page);
+}
