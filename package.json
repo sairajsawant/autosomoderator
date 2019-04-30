@@ -9,10 +9,6 @@
   "author": "Sairaj Sawant",
   "license": "ISC",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
-    "jsonfile": "^5.0.0",
-    "nightmare": "^3.0.2",
-    "path": "^0.12.7",
     "puppeteer": "^1.15.0"
   }
 }
