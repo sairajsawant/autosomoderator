@@ -2,7 +2,8 @@ const puppeteer = require('puppeteer');
 (async () => {
     const browser = await puppeteer.launch({
         headless: false,
-        userDataDir: 'userData'
+        userDataDir: 'userData',
+        args: ['--no-sandbox']
     })
     const page = await browser.newPage()
     doProcess(page);
